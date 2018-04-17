@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" ng-app="angularTable">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokeman Characters</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<style>
+*, *:after, *:before {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+body {
+  background:#f0f0f0;
+}
+img {
+  max-width:100%;
+}
+.card-grid {
+  width:100%;
+}
+.card-grid:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.card-wrap {
+  float:left;
+  width:100%;
+  padding:5px;
+}
+@media (min-width: 500px) {
+  .card-wrap {
+    width:50%;
+  }
+}
+@media (min-width: 720px) {
+  .card-wrap {
+    width:25%;
+  }
+}
+.card {
+  background-color:white;
+  border-radius:5px;
+  border:1px solid #ccc;
+  border-bottom:2px solid #ccc;
+}
+.card > div {
+  padding:0 1em;
+}
+</style>
+</head>
+
+<body>
+    <div class="headerImage">
+        <img src="images/hero.jpg" alt="Hero" style="width:100%;">
+        <div class="middle-left">Pokeman Gallery</div>
+    </div>
+
+    <div class="container" ng-controller="listdata">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" ng-model="search" class="form-control input-lg" placeholder="Search" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="button">
+                            <i class="material-icons">&#xE8B6;</i>
+                        </button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button ng-click="sort('name')" type="button" class="btn btn-link">Sort By Name</button>
+            <button ng-click="sort('url')" type="button" class="btn btn-link">Sort By Number</button>
+        </div>
+        
+        <hr>
+        
+        <div class="card-grid" ng-controller="listdata">
+            <div class="card-wrap" dir-paginate="user in users.results|orderBy:sortKey:reverse|filter:search|itemsPerPage:20">
+                <div class="card">
+                    <img src='images/{{user.url.split("/")[6]}}.png' class="card-img"/>
+                    <div>
+                        <h4>#{{("00" +user.url.split("/")[6]).slice(-3)}}</h4>
+                        <p>{{user.name}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" />
+    </div>
+
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/dirPagination.js"></script>
+    <script src="app/app.js"></script>
+</body>
+
+</html>
